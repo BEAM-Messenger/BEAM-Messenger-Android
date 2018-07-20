@@ -1,4 +1,4 @@
-package de.beam_messenger.BEAM_Messenger;
+package de.beam_messenger.beam_messenger;
 
 import android.os.Bundle;
 
