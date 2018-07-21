@@ -2,14 +2,11 @@ name: beam_messenger
 description: A new flutter project.
 
 dependencies:
-  http: any
-  sqflite: any
-  path_provider: any
+  local_auth: "^0.2.0"
+  shared_preferences: "^0.4.0"
   cupertino_icons: any
   flutter:
     sdk: flutter
 
 flutter:
   uses-material-design: true
-  assets:
-    - assets/login_background.jpg
