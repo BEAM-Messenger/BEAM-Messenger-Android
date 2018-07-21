@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 //Variables
 bool isLoggedIn = false;
@@ -15,7 +16,7 @@ String error = "";
 String id = "0";
 String firstname = "";
 String email = "";
-String avatar ="https://api.adorable.io/avatars/128/BEAM-Messenger.png";
+String avatar = "https://api.adorable.io/avatars/128/BEAM-Messenger.png";
 
 class Utility {
   static Future<Null> showAlertPopup(
@@ -44,37 +45,26 @@ class Utility {
     );
   }
 
-  static Future<String> getData(String params) async {
+  static Future<String> getData(Map params) async {
     var requestURL = apiURL;
-    requestURL = requestURL + params;
-//    requestURL = requestURL + "calltype=" + calltypeParm;
-//    requestURL = requestURL + "&mod=" + modParm;
-//    requestURL = requestURL + "&?action=" + actionParm;
-//    requestURL = requestURL + "&?param=" + paramsParm;
-//    requestURL = requestURL + "&?foo=" + fooParm;
+    requestURL = requestURL;
     print("Request URL: " + requestURL);
 
     var url = requestURL;
-    var httpClient = new HttpClient();
     String result;
+
     try {
-      var request = await httpClient.getUrl(Uri.parse(url));
-      var response = await request.close();
-      if (response.statusCode == HttpStatus.OK) {
-        try {
-          var json = await response.transform(UTF8.decoder).join();
-          result = json;
-        } catch (exception) {
-          result = 'Error Getting Data';
-        }
-      } else {
-        result =
-            'Error getting IP address:\nHttp status ${response.statusCode}';
-      }
+      await http.post(url, body: {
+        "email": params["email"],
+        "password": params["password"]
+      }).then((response) {
+        result = response.body;
+        print('Answer: ' + result.toString());
+      });
     } catch (exception) {
-      result = 'Failed getting IP address';
+      result = 'Failed logging in';
     }
-    print("Result: " + result);
+
     return result;
   }
 

@@ -5,6 +5,7 @@ dependencies:
   local_auth: "^0.2.0"
   shared_preferences: "^0.4.0"
   cupertino_icons: any
+  http: any
   flutter:
     sdk: flutter
 

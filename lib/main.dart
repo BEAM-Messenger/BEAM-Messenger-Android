@@ -74,7 +74,7 @@ class LoginPageState extends State<LoginPage> {
 
   Future<bool> _loginRequest(String email, String password) async {
     String result = "";
-    result = await globals.Utility.getData("");
+    result = await globals.Utility.getData({'email': email, 'password': password});
 
     //Decode Data
     try {
