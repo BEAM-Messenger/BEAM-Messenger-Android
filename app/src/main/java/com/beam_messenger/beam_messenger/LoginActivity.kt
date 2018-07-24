@@ -1,31 +1,34 @@
 package com.beam_messenger.beam_messenger
 
+import android.Manifest.permission.READ_CONTACTS
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.annotation.TargetApi
-import android.content.pm.PackageManager
-import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity
+import android.app.ActivityOptions
 import android.app.LoaderManager.LoaderCallbacks
 import android.content.CursorLoader
+import android.content.Intent
 import android.content.Loader
+import android.content.pm.PackageManager
 import android.database.Cursor
 import android.net.Uri
 import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.provider.ContactsContract
+import android.support.design.widget.Snackbar
+import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
+import android.transition.Explode
+import android.view.Gravity
 import android.view.View
+import android.view.Window
 import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
 import android.widget.TextView
-
-import java.util.ArrayList
-import android.Manifest.permission.READ_CONTACTS
-import android.content.Intent
-
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_login.*
+import java.util.*
 
 /**
  * A login screen that offers login via email/password.
@@ -37,6 +40,11 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
     private var mAuthTask: UserLoginTask? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        with(window) {
+            requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
+            exitTransition = Explode()
+        }
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         // Set up the login form.
@@ -143,11 +151,11 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
     }
 
     private fun isEmailValid(email: String): Boolean {
-        return email.contains("@")
+        return email.contains("@") && email.length >= 4
     }
 
     private fun isPasswordValid(password: String): Boolean {
-        return password.length > 7
+        return password.length >= 8
     }
 
     /**
@@ -265,9 +273,13 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             showProgress(false)
 
             if (success!!) {
+                val toast = Toast.makeText(this@LoginActivity, "Successfully logged in.", Toast.LENGTH_LONG)
+                toast.setGravity(Gravity.CENTER, 0, 0)
+                toast.show()
+
                 val intent = Intent(this@LoginActivity, MainActivity::class.java)
                 //intent.putExtra("keyIdentifier", value)
-                startActivity(intent)
+                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this@LoginActivity).toBundle())
             } else {
                 password.error = getString(R.string.error_incorrect_password)
                 password.requestFocus()
