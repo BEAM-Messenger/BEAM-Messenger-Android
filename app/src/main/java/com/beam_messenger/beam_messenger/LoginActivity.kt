@@ -4,7 +4,6 @@ import android.Manifest.permission.READ_CONTACTS
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.annotation.TargetApi
-import android.app.ActivityOptions
 import android.app.LoaderManager.LoaderCallbacks
 import android.content.CursorLoader
 import android.content.Intent
@@ -19,10 +18,8 @@ import android.provider.ContactsContract
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
-import android.transition.Explode
 import android.view.Gravity
 import android.view.View
-import android.view.Window
 import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
 import android.widget.TextView
@@ -40,11 +37,6 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
     private var mAuthTask: UserLoginTask? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        with(window) {
-            requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
-            exitTransition = Explode()
-        }
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         // Set up the login form.
@@ -279,7 +271,7 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
                 val intent = Intent(this@LoginActivity, MainActivity::class.java)
                 //intent.putExtra("keyIdentifier", value)
-                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this@LoginActivity).toBundle())
+                startActivity(intent)
             } else {
                 password.error = getString(R.string.error_incorrect_password)
                 password.requestFocus()
