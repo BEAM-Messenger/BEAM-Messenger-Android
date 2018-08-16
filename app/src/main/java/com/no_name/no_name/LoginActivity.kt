@@ -24,9 +24,10 @@ import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import android.widget.Toast
-import com.no_name.no_name.MainActivity
-import com.no_name.no_name.R
+import com.github.kittinunf.fuel.android.extension.responseJson
+import com.github.kittinunf.fuel.httpPost
 import kotlinx.android.synthetic.main.activity_login.*
+import org.json.JSONObject
 import java.util.*
 
 /**
@@ -243,23 +244,24 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
     inner class UserLoginTask internal constructor(private val mEmail: String, private val mPassword: String) : AsyncTask<Void, Void, Boolean>() {
 
         override fun doInBackground(vararg params: Void): Boolean? {
-            // TODO: attempt authentication against a network service.
+            val credentialJson = JSONObject()
+            credentialJson.put("email", mEmail)
+            credentialJson.put("password", mPassword)
 
-            try {
-                // Simulate network access.
-                Thread.sleep(1000)
-            } catch (e: InterruptedException) {
+            val (request, response, result) = "/login".httpPost()
+                    .header("Content-Type" to "application/json")
+                    .body(credentialJson.toString())
+                    .responseJson()
+
+            result.fold(success = {
+                val secureStorage = SecureStorage(this@LoginActivity)
+                val accessToken = result.get().obj().getString("access_token")
+                secureStorage.set("access_token", accessToken)
+                val verifyToken = secureStorage.get("access_token")
+                return verifyToken == accessToken
+            }, failure = {
                 return false
-            }
-
-            return DUMMY_CREDENTIALS
-                    .map { it.split(":") }
-                    .firstOrNull { it[0] == mEmail }
-                    ?.let {
-                        // Account exists, return true if the password matches.
-                        it[1] == mPassword
-                    }
-                    ?: true
+            })
         }
 
         override fun onPostExecute(success: Boolean?) {
@@ -267,13 +269,13 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             showProgress(false)
 
             if (success!!) {
-                val toast = Toast.makeText(this@LoginActivity, "Successfully logged in.", Toast.LENGTH_LONG)
-                toast.setGravity(Gravity.CENTER, 0, 0)
-                toast.show()
-
                 val intent = Intent(this@LoginActivity, MainActivity::class.java)
                 //intent.putExtra("keyIdentifier", value)
                 startActivity(intent)
+
+                val toast = Toast.makeText(this@LoginActivity, "Successfully logged in.", Toast.LENGTH_LONG)
+                toast.setGravity(Gravity.CENTER, 0, 0)
+                toast.show()
             } else {
                 password.error = getString(R.string.error_incorrect_password)
                 password.requestFocus()
@@ -292,11 +294,5 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
          * Id to identity READ_CONTACTS permission request.
          */
         private val REQUEST_READ_CONTACTS = 0
-
-        /**
-         * A dummy authentication store containing known user names and passwords.
-         * TODO: remove after connecting to a real authentication system.
-         */
-        private val DUMMY_CREDENTIALS = arrayOf("foo@example.com:password")
     }
 }
