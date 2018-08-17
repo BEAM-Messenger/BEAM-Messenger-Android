@@ -26,6 +26,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.github.kittinunf.fuel.android.extension.responseJson
 import com.github.kittinunf.fuel.httpPost
+import com.madapps.prefrences.EasyPrefrences
 import kotlinx.android.synthetic.main.activity_login.*
 import org.json.JSONObject
 import java.util.*
@@ -39,10 +40,12 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
      */
     private var mAuthTask: UserLoginTask? = null
 
+    /**
+     * Set up the login form and initial configuration
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        // Set up the login form.
         populateAutoComplete()
         password.setOnEditorActionListener(TextView.OnEditorActionListener { _, id, _ ->
             if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
@@ -191,6 +194,9 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         }
     }
 
+    /**
+     * Things executed while creation of the loader
+     */
     override fun onCreateLoader(i: Int, bundle: Bundle?): Loader<Cursor> {
         return CursorLoader(this,
                 // Retrieve data rows for the device user's 'profile' contact.
@@ -206,6 +212,9 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
                 ContactsContract.Contacts.Data.IS_PRIMARY + " DESC")
     }
 
+    /**
+     * Things executed when loading is finished -> shown if login wasn't successful
+     */
     override fun onLoadFinished(cursorLoader: Loader<Cursor>, cursor: Cursor) {
         val emails = ArrayList<String>()
         cursor.moveToFirst()
@@ -242,21 +251,29 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
      * the user.
      */
     inner class UserLoginTask internal constructor(private val mEmail: String, private val mPassword: String) : AsyncTask<Void, Void, Boolean>() {
-
+        /**
+         * Login processing and verifying
+         */
         override fun doInBackground(vararg params: Void): Boolean? {
             val credentialJson = JSONObject()
             credentialJson.put("email", mEmail)
             credentialJson.put("password", mPassword)
 
-            val (request, response, result) = "/login".httpPost()
+            val (_, _, result) = "/login".httpPost()
                     .header("Content-Type" to "application/json")
                     .body(credentialJson.toString())
                     .responseJson()
 
             result.fold(success = {
-                val secureStorage = SecureStorage(this@LoginActivity)
                 val accessToken = result.get().obj().getString("access_token")
+                val userID = result.get().obj().getString("user_id")
+
+                val sharedPrefs = EasyPrefrences(this@LoginActivity)
+                sharedPrefs.putString("user_id", userID)
+
+                val secureStorage = SecureStorage(this@LoginActivity)
                 secureStorage.set("access_token", accessToken)
+
                 val verifyToken = secureStorage.get("access_token")
                 return verifyToken == accessToken
             }, failure = {
@@ -264,6 +281,9 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             })
         }
 
+        /**
+         * Runs after [doInBackground], starts actions depending on [success]
+         */
         override fun onPostExecute(success: Boolean?) {
             mAuthTask = null
             showProgress(false)
@@ -282,6 +302,9 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             }
         }
 
+        /**
+         * Executed if login process was cancelled
+         */
         override fun onCancelled() {
             mAuthTask = null
             showProgress(false)
@@ -289,7 +312,6 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
     }
 
     companion object {
-
         /**
          * Id to identity READ_CONTACTS permission request.
          */

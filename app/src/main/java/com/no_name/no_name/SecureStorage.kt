@@ -7,14 +7,26 @@ import com.kazakago.cryptore.CipherAlgorithm
 import com.kazakago.cryptore.Cryptore
 import com.madapps.prefrences.EasyPrefrences
 
-
+/**
+ * Class for saving data securely in SharedPreferences
+ */
 class SecureStorage(private val context: Context) {
-    public fun set(key: String, value: String) {
+    /**
+     * Encrypts and saves the [value] with [key] as index
+     */
+    fun set(key: String, value: String) {
         sharedPrefs.putString(key, encryptAES(value))
     }
 
-    public fun get(key: String): String {
-        return decryptAES(sharedPrefs.getString(key))
+    /**
+     * Finds the encrypted value by [key], decrypts it and returns the value as string
+     */
+    fun get(key: String): String? {
+        return try {
+            decryptAES(sharedPrefs.getString(key))
+        } catch (e: Exception) {
+            null
+        }
     }
 
     private val sharedPrefs = EasyPrefrences(context)
@@ -26,8 +38,6 @@ class SecureStorage(private val context: Context) {
 
     private val cryptoreAES: Cryptore by lazy {
         val builder = Cryptore.Builder(alias = Alias.AES.value, type = CipherAlgorithm.AES)
-        // builder.blockMode = BlockMode.CBC //If Needed.
-        // builder.encryptionPadding = EncryptionPadding.PKCS7 //If Needed.
         builder.build()
     }
 
