@@ -6,7 +6,6 @@ import android.animation.AnimatorListenerAdapter
 import android.annotation.TargetApi
 import android.app.LoaderManager.LoaderCallbacks
 import android.content.CursorLoader
-import android.content.Intent
 import android.content.Loader
 import android.content.pm.PackageManager
 import android.database.Cursor
@@ -18,16 +17,16 @@ import android.provider.ContactsContract
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
-import android.view.Gravity
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import android.widget.Toast
 import com.github.kittinunf.fuel.android.extension.responseJson
 import com.github.kittinunf.fuel.httpPost
 import com.madapps.prefrences.EasyPrefrences
 import kotlinx.android.synthetic.main.activity_login.*
+import org.jetbrains.anko.longToast
+import org.jetbrains.anko.startActivity
 import org.json.JSONObject
 import java.util.*
 
@@ -94,7 +93,6 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             }
         }
     }
-
 
     /**
      * Attempts to sign in or register the account specified by the login form.
@@ -289,13 +287,8 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             showProgress(false)
 
             if (success!!) {
-                val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                //intent.putExtra("keyIdentifier", value)
-                startActivity(intent)
-
-                val toast = Toast.makeText(this@LoginActivity, "Successfully logged in.", Toast.LENGTH_LONG)
-                toast.setGravity(Gravity.CENTER, 0, 0)
-                toast.show()
+                startActivity<MainActivity>()
+                longToast("Successfully logged in.")
             } else {
                 password.error = getString(R.string.error_incorrect_password)
                 password.requestFocus()
