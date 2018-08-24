@@ -43,6 +43,7 @@ class InitialActivity : AppCompatActivity() {
                         val (_, serverError) = result
                         when {
                             response.httpStatusCode == 200 -> startActivity<MainActivity>()
+                            response.httpStatusCode == 401 -> startActivity<LoginActivity>()
                             !isConnected() -> startActivity<MainActivity>("notConnected" to true)
                             serverError != null -> startActivity<MainActivity>("serverDown" to true)
                             else -> startActivity<LoginActivity>()
