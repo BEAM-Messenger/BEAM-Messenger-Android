@@ -28,8 +28,9 @@ class MainActivity : AppCompatActivity() {
 
         if (intent.getBooleanExtra("serverDown", false)) {
             alert("We are sorry, but our servers do not seem to be working at the moment. Please wait a few minutes before you try again.", "Sorry") {
+                isCancelable = false
                 positiveButton("Okay") {
-                    finishAffinity() // TODO: Loading activity will somehow still be opened after close
+                    finishAndRemoveTask()
                     System.exit(0)
                 }
             }.show()

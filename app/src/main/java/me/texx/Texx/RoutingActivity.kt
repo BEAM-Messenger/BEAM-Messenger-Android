@@ -9,8 +9,7 @@ import com.madapps.prefrences.EasyPrefrences
 import daio.io.dresscode.dressCodeName
 import daio.io.dresscode.matchDressCode
 import me.texx.Texx.util.ThemeUtil.getThemeName
-import org.jetbrains.anko.alert
-import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.*
 import java.io.IOException
 
 /**
@@ -51,7 +50,7 @@ class RoutingActivity : AppCompatActivity() {
                             response.httpStatusCode == 200 -> startActivity<MainActivity>()
                             response.httpStatusCode == 401 -> startActivity<LoginActivity>()
                             !isConnected() -> startActivity<MainActivity>("notConnected" to true)
-                            serverError != null -> startActivity<MainActivity>("serverDown" to true)
+                            serverError != null -> startActivity(intentFor<MainActivity>("serverDown" to true).newTask().clearTask().noAnimation().excludeFromRecents())
                             else -> startActivity<LoginActivity>()
                         }
                     }
