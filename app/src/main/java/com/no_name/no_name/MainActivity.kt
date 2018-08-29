@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
             longToast("No internet connection!")
 
         fab.setOnClickListener { view ->
-            startActivity<SettingsActivity>()
+            // TODO: Add camera support
         }
     }
 
@@ -57,7 +57,10 @@ class MainActivity : AppCompatActivity() {
      */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_settings -> true
+            R.id.action_settings -> {
+                startActivity<SettingsActivity>()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
