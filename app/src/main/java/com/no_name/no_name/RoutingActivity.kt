@@ -1,11 +1,12 @@
 package com.no_name.no_name
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import com.afollestad.aesthetic.AestheticActivity
 import com.github.kittinunf.fuel.android.extension.responseJson
 import com.github.kittinunf.fuel.core.FuelManager
 import com.github.kittinunf.fuel.httpGet
 import com.madapps.prefrences.EasyPrefrences
+import com.no_name.no_name.Util.ThemeUtil
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.startActivity
 import java.io.IOException
@@ -14,7 +15,7 @@ import java.io.IOException
  * Activity which will be run before any other to verify user and choose which activity
  * should be started next
  */
-class InitialActivity : AppCompatActivity() {
+class RoutingActivity : AestheticActivity() {
     private val server_address = "192.168.0.102"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,6 +25,8 @@ class InitialActivity : AppCompatActivity() {
             isCancelable = false
         }.show()
         verifyLogin()
+
+        (ThemeUtil(this)::setActivityTheme)(true)
     }
 
     @Throws(InterruptedException::class, IOException::class)
@@ -33,10 +36,10 @@ class InitialActivity : AppCompatActivity() {
     }
 
     private fun verifyLogin() {
-        val accessToken: String? = SecureStorage(this@InitialActivity).get("access_token")
+        val accessToken: String? = SecureStorage(this@RoutingActivity).get("access_token")
         // synced function of fuel doesn't work here (#331) -> ugly workaround
         if (accessToken != null) {
-            val userID = EasyPrefrences(this@InitialActivity).getString("user_id")
+            val userID = EasyPrefrences(this@RoutingActivity).getString("user_id")
             "/users/$userID".httpGet() // verify by making request to user api
                     .header("Authorization" to "Bearer $accessToken")
                     .responseJson { _, response, result ->
