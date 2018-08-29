@@ -1,27 +1,29 @@
 package com.no_name.no_name
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import com.afollestad.aesthetic.AestheticActivity
+import com.no_name.no_name.Util.ThemeUtil
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.longToast
+import org.jetbrains.anko.startActivity
 
 /**
  * Main activity aka home screen of app
  */
-class MainActivity : AppCompatActivity() {
+class MainActivity : AestheticActivity() {
     /**
      * Set initial configuration
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setSupportActionBar(toolbar)
 
-        val serverDown = intent.getBooleanExtra("serverDown", false)
-        if (serverDown) {
+        (ThemeUtil(this)::setActivityTheme)(false)
+
+        if (intent.getBooleanExtra("serverDown", false)) {
             alert("We are sorry, but our servers do not seem to be working at the moment. Please wait a few minutes before you try again.", "Sorry") {
                 positiveButton("Okay") {
                     finishAffinity() // TODO: Loading activity will somehow still be opened after close
@@ -30,15 +32,14 @@ class MainActivity : AppCompatActivity() {
             }.show()
         }
 
-        val notConnected = intent.getBooleanExtra("notConnected", false)
-        if (notConnected) {
+        if (intent.getBooleanExtra("notConnected", false))
             longToast("No internet connection!")
-        }
 
         fab.setOnClickListener { view ->
-            // TODO: Set FAB onclick event
+            startActivity<SettingsActivity>()
         }
     }
+
 
     /**
      * Inflate the [menu]; this adds items to the action bar if it is present

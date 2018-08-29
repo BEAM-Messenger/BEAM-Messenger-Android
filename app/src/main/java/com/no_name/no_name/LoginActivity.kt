@@ -15,15 +15,16 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import com.afollestad.aesthetic.AestheticActivity
 import com.github.kittinunf.fuel.android.extension.responseJson
 import com.github.kittinunf.fuel.httpPost
 import com.madapps.prefrences.EasyPrefrences
+import com.no_name.no_name.Util.ThemeUtil
 import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.longToast
 import org.jetbrains.anko.startActivity
@@ -33,7 +34,7 @@ import java.util.*
 /**
  * A login screen that offers login via email/password.
  */
-class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
+class LoginActivity : AestheticActivity(), LoaderCallbacks<Cursor> {
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
@@ -53,6 +54,8 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             }
             false
         })
+
+        (ThemeUtil(this)::setActivityTheme)(true)
 
         email_sign_in_button.setOnClickListener { attemptLogin() }
     }
