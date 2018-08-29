@@ -1,10 +1,12 @@
 package com.no_name.no_name
 
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import com.afollestad.aesthetic.AestheticActivity
-import com.no_name.no_name.Util.ThemeUtil
+import com.no_name.no_name.util.ThemeUtil.getThemeName
+import daio.io.dresscode.dressCodeName
+import daio.io.dresscode.matchDressCode
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.longToast
@@ -13,15 +15,16 @@ import org.jetbrains.anko.startActivity
 /**
  * Main activity aka home screen of app
  */
-class MainActivity : AestheticActivity() {
+class MainActivity : AppCompatActivity() {
     /**
      * Set initial configuration
      */
     override fun onCreate(savedInstanceState: Bundle?) {
+        matchDressCode()
         super.onCreate(savedInstanceState)
+        dressCodeName = getThemeName(this)
         setContentView(R.layout.activity_main)
-
-        (ThemeUtil(this)::setActivityTheme)(false)
+        setSupportActionBar(toolbar)
 
         if (intent.getBooleanExtra("serverDown", false)) {
             alert("We are sorry, but our servers do not seem to be working at the moment. Please wait a few minutes before you try again.", "Sorry") {

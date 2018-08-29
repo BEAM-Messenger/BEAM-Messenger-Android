@@ -1,12 +1,14 @@
 package com.no_name.no_name
 
 import android.os.Bundle
-import com.afollestad.aesthetic.AestheticActivity
+import android.support.v7.app.AppCompatActivity
 import com.github.kittinunf.fuel.android.extension.responseJson
 import com.github.kittinunf.fuel.core.FuelManager
 import com.github.kittinunf.fuel.httpGet
 import com.madapps.prefrences.EasyPrefrences
-import com.no_name.no_name.Util.ThemeUtil
+import com.no_name.no_name.util.ThemeUtil.getThemeName
+import daio.io.dresscode.dressCodeName
+import daio.io.dresscode.matchDressCode
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.startActivity
 import java.io.IOException
@@ -15,18 +17,19 @@ import java.io.IOException
  * Activity which will be run before any other to verify user and choose which activity
  * should be started next
  */
-class RoutingActivity : AestheticActivity() {
-    private val server_address = "192.168.0.102"
+class RoutingActivity : AppCompatActivity() {
+    private val serverAddress = "192.168.0.102"
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        matchDressCode()
         super.onCreate(savedInstanceState)
-        FuelManager.instance.basePath = "http://$server_address"
+        dressCodeName = getThemeName(this)
+
+        FuelManager.instance.basePath = "http://$serverAddress"
         alert("Logging you in.", "Loading...") {
             isCancelable = false
         }.show()
         verifyLogin()
-
-        (ThemeUtil(this)::setActivityTheme)(true)
     }
 
     @Throws(InterruptedException::class, IOException::class)

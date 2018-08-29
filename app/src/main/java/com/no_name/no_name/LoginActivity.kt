@@ -15,16 +15,18 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.support.design.widget.Snackbar
+import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import com.afollestad.aesthetic.AestheticActivity
 import com.github.kittinunf.fuel.android.extension.responseJson
 import com.github.kittinunf.fuel.httpPost
 import com.madapps.prefrences.EasyPrefrences
-import com.no_name.no_name.Util.ThemeUtil
+import com.no_name.no_name.util.ThemeUtil.getThemeName
+import daio.io.dresscode.dressCodeName
+import daio.io.dresscode.matchDressCode
 import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.longToast
 import org.jetbrains.anko.startActivity
@@ -34,7 +36,7 @@ import java.util.*
 /**
  * A login screen that offers login via email/password.
  */
-class LoginActivity : AestheticActivity(), LoaderCallbacks<Cursor> {
+class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
@@ -44,8 +46,11 @@ class LoginActivity : AestheticActivity(), LoaderCallbacks<Cursor> {
      * Set up the login form and initial configuration
      */
     override fun onCreate(savedInstanceState: Bundle?) {
+        matchDressCode()
         super.onCreate(savedInstanceState)
+        dressCodeName = getThemeName(this)
         setContentView(R.layout.activity_login)
+
         populateAutoComplete()
         password.setOnEditorActionListener(TextView.OnEditorActionListener { _, id, _ ->
             if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
@@ -54,8 +59,6 @@ class LoginActivity : AestheticActivity(), LoaderCallbacks<Cursor> {
             }
             false
         })
-
-        (ThemeUtil(this)::setActivityTheme)(true)
 
         email_sign_in_button.setOnClickListener { attemptLogin() }
     }

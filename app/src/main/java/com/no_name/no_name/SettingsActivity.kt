@@ -9,8 +9,9 @@ import android.os.Bundle
 import android.preference.*
 import android.support.v4.app.NavUtils
 import android.view.MenuItem
-import com.afollestad.aesthetic.Aesthetic
-import com.no_name.no_name.Util.ThemeUtil
+import com.no_name.no_name.util.ThemeUtil.getThemeName
+import daio.io.dresscode.dressCodeName
+import daio.io.dresscode.matchDressCode
 
 /**
  * A [PreferenceActivity] that presents a set of application settings. On
@@ -25,20 +26,10 @@ import com.no_name.no_name.Util.ThemeUtil
 class SettingsActivity : PreferenceActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Aesthetic.attach(this)
+        matchDressCode()
         super.onCreate(savedInstanceState)
+        dressCodeName = getThemeName(this)
         setupActionBar()
-        (ThemeUtil(this)::setActivityTheme)(true)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Aesthetic.resume(this)
-    }
-
-    override fun onPause() {
-        Aesthetic.pause(this)
-        super.onPause()
     }
 
     /**
@@ -46,6 +37,10 @@ class SettingsActivity : PreferenceActivity() {
      */
     private fun setupActionBar() {
         actionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    fun updateTheme() {
+        dressCodeName = getThemeName(this)
     }
 
     /**
@@ -97,6 +92,14 @@ class SettingsActivity : PreferenceActivity() {
             super.onCreate(savedInstanceState)
             addPreferencesFromResource(R.xml.pref_general)
             setHasOptionsMenu(true)
+        }
+
+        override fun onPreferenceTreeClick(preferenceScreen: PreferenceScreen?, preference: Preference?): Boolean {
+            if (preference?.key == "dark_theme_switch") {
+                (activity as SettingsActivity).updateTheme()
+                return true
+            }
+            return true
         }
 
         /**
