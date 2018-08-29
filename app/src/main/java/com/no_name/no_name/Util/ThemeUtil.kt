@@ -1,14 +1,18 @@
-package com.no_name.no_name.Util
+package com.no_name.no_name.util
 
 import android.content.Context
-import com.afollestad.aesthetic.Aesthetic
 import com.madapps.prefrences.EasyPrefrences
-import com.no_name.no_name.R
+import com.no_name.no_name.util.ThemeUtil.isDarkTheme
 
-class ThemeUtil(context: Context) {
-    private val sharedPrefs = EasyPrefrences(context)
-
-    private fun isDarkTheme(): Boolean {
+/**
+ * Get the name of the theme depending on [actionBar] and [isDarkTheme]
+ */
+object ThemeUtil {
+    /**
+     * Checks if the theme saved in sharedPreferences is dark/light
+     */
+    private fun isDarkTheme(context: Context): Boolean {
+        val sharedPrefs = EasyPrefrences(context)
         val darkTheme: Boolean? = sharedPrefs.getBoolean("dark_theme_switch")
         darkTheme?.let {
             return darkTheme
@@ -17,15 +21,14 @@ class ThemeUtil(context: Context) {
         }
     }
 
-    fun setActivityTheme(ActionBar: Boolean) {
-        val theme: Int = if (!ActionBar) {
-            if (isDarkTheme()) R.style.AppTheme_Dark_NoActionBar else R.style.AppTheme_NoActionBar
-        } else
-            if (isDarkTheme()) R.style.AppTheme_Dark else R.style.AppTheme
-
-        Aesthetic.config {
-            activityTheme(R.style.AppTheme_NoActionBar)
-            isDark(isDarkTheme())
+    /**
+     * Get the name of the theme depending on [actionBar] and [isDarkTheme]
+     */
+    fun getThemeName(context: Context): String {
+        return if (isDarkTheme(context)) {
+            "dark"
+        } else {
+            "light"
         }
     }
 }
