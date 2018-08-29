@@ -1,4 +1,4 @@
-package com.no_name.no_name
+package me.texx.Texx
 
 import android.content.Context
 import android.preference.PreferenceManager

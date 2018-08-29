@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.no_name.no_name">
+    package="me.texx.Texx">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -37,7 +37,7 @@
             android:label="@string/title_activity_app_settings">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.no_name.no_name.MainActivity" />
+                android:value="me.texx.Texx.MainActivity" />
         </activity>
     </application>
 

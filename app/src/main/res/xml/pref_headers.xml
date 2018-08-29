@@ -3,12 +3,12 @@
     <!-- These settings headers are only used on tablets. -->
 
     <header
-        android:fragment="com.no_name.no_name.SettingsActivity$GeneralPreferenceFragment"
+        android:fragment="me.texx.Texx.SettingsActivity$GeneralPreferenceFragment"
         android:icon="@drawable/ic_settings_black_24dp"
         android:title="@string/pref_header_general" />
 
     <header
-        android:fragment="com.no_name.no_name.SettingsActivity$AccountPreferenceFragment"
+        android:fragment="me.texx.Texx.SettingsActivity$AccountPreferenceFragment"
         android:icon="@drawable/ic_account_circle_black_24dp"
         android:title="@string/pref_header_account" />
 

@@ -1,4 +1,4 @@
-package com.no_name.no_name
+package me.texx.Texx
 
 import android.app.Application
 import daio.io.dresscode.DressCode

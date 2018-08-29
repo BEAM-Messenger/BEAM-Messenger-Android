@@ -1,8 +1,8 @@
-package com.no_name.no_name.util
+package me.texx.Texx.util
 
 import android.content.Context
 import com.madapps.prefrences.EasyPrefrences
-import com.no_name.no_name.util.ThemeUtil.isDarkTheme
+import me.texx.Texx.util.ThemeUtil.isDarkTheme
 
 /**
  * Get the name of the theme depending on [actionBar] and [isDarkTheme]

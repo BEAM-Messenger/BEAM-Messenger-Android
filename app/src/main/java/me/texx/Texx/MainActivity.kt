@@ -1,13 +1,13 @@
-package com.no_name.no_name
+package me.texx.Texx
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import com.no_name.no_name.util.ThemeUtil.getThemeName
 import daio.io.dresscode.dressCodeName
 import daio.io.dresscode.matchDressCode
 import kotlinx.android.synthetic.main.activity_main.*
+import me.texx.Texx.util.ThemeUtil.getThemeName
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.longToast
 import org.jetbrains.anko.startActivity

@@ -1,4 +1,4 @@
-package com.no_name.no_name
+package me.texx.Texx
 
 import android.annotation.TargetApi
 import android.content.Context
@@ -9,9 +9,9 @@ import android.os.Bundle
 import android.preference.*
 import android.support.v4.app.NavUtils
 import android.view.MenuItem
-import com.no_name.no_name.util.ThemeUtil.getThemeName
 import daio.io.dresscode.dressCodeName
 import daio.io.dresscode.matchDressCode
+import me.texx.Texx.util.ThemeUtil.getThemeName
 
 /**
  * A [PreferenceActivity] that presents a set of application settings. On

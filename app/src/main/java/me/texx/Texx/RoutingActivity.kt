@@ -1,4 +1,4 @@
-package com.no_name.no_name
+package me.texx.Texx
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -6,9 +6,9 @@ import com.github.kittinunf.fuel.android.extension.responseJson
 import com.github.kittinunf.fuel.core.FuelManager
 import com.github.kittinunf.fuel.httpGet
 import com.madapps.prefrences.EasyPrefrences
-import com.no_name.no_name.util.ThemeUtil.getThemeName
 import daio.io.dresscode.dressCodeName
 import daio.io.dresscode.matchDressCode
+import me.texx.Texx.util.ThemeUtil.getThemeName
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.startActivity
 import java.io.IOException

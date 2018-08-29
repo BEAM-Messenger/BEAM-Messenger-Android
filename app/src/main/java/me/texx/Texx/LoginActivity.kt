@@ -1,4 +1,4 @@
-package com.no_name.no_name
+package me.texx.Texx
 
 import android.Manifest.permission.READ_CONTACTS
 import android.animation.Animator
@@ -24,10 +24,10 @@ import android.widget.TextView
 import com.github.kittinunf.fuel.android.extension.responseJson
 import com.github.kittinunf.fuel.httpPost
 import com.madapps.prefrences.EasyPrefrences
-import com.no_name.no_name.util.ThemeUtil.getThemeName
 import daio.io.dresscode.dressCodeName
 import daio.io.dresscode.matchDressCode
 import kotlinx.android.synthetic.main.activity_login.*
+import me.texx.Texx.util.ThemeUtil.getThemeName
 import org.jetbrains.anko.longToast
 import org.jetbrains.anko.startActivity
 import org.json.JSONObject
