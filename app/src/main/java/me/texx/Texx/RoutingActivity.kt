@@ -17,7 +17,7 @@ import java.io.IOException
  * should be started next
  */
 class RoutingActivity : AppCompatActivity() {
-    private val serverAddress = "192.168.0.102"
+    private val serverAddress = "192.168.0.104"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         matchDressCode()
@@ -31,6 +31,9 @@ class RoutingActivity : AppCompatActivity() {
         verifyLogin()
     }
 
+    /**
+     * Checks if client is connected to the internet by pinging google
+     */
     @Throws(InterruptedException::class, IOException::class)
     fun isConnected(): Boolean {
         val command = "ping -c 1 google.com"
