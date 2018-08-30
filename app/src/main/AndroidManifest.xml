@@ -39,6 +39,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="me.texx.Texx.MainActivity" />
         </activity>
+        <activity android:name=".CameraActivity"></activity>
     </application>
 
 </manifest>

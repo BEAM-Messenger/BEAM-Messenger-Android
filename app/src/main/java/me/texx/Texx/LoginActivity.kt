@@ -269,6 +269,7 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
                     .responseJson()
 
             result.fold(success = {
+                // TODO: Fix password incorrect on server down/no internet connection at login
                 val accessToken = result.get().obj().getString("access_token")
                 val userID = result.get().obj().getString("user_id")
 

@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
             longToast("No internet connection!")
 
         fab.setOnClickListener { view ->
-            // TODO: Add camera support
+            startActivity<CameraActivity>()
         }
     }
 

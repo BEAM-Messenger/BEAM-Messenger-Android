@@ -17,7 +17,7 @@ import java.io.IOException
  * should be started next
  */
 class RoutingActivity : AppCompatActivity() {
-    private val serverAddress = "192.168.0.104"
+    private val serverAddress = "192.168.137.1"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         matchDressCode()
@@ -49,12 +49,12 @@ class RoutingActivity : AppCompatActivity() {
                     .header("Authorization" to "Bearer $accessToken")
                     .responseJson { _, response, result ->
                         val (_, serverError) = result
-                        when {
-                            response.httpStatusCode == 200 -> startActivity<MainActivity>()
-                            response.httpStatusCode == 401 -> startActivity<LoginActivity>()
-                            !isConnected() -> startActivity<MainActivity>("notConnected" to true)
+                        when { // TODO: Cleaner task solution
+                            response.httpStatusCode == 200 -> startActivity(intentFor<MainActivity>().newTask().clearTask().noAnimation().excludeFromRecents())
+                            response.httpStatusCode == 401 -> startActivity(intentFor<LoginActivity>().newTask().clearTask().noAnimation().excludeFromRecents())
+                            !isConnected() -> startActivity(intentFor<MainActivity>("notConnected" to true).newTask().clearTask().noAnimation().excludeFromRecents())
                             serverError != null -> startActivity(intentFor<MainActivity>("serverDown" to true).newTask().clearTask().noAnimation().excludeFromRecents())
-                            else -> startActivity<LoginActivity>()
+                            else -> startActivity(intentFor<LoginActivity>().newTask().clearTask().noAnimation().excludeFromRecents())
                         }
                     }
         } else {
