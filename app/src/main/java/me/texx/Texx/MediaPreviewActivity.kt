@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Window
 import android.view.WindowManager
+import android.widget.ImageView
 import daio.io.dresscode.dressCodeName
 import daio.io.dresscode.matchDressCode
 import me.texx.Texx.util.ThemeUtil.getThemeName
+import org.jetbrains.anko.longToast
 
 class MediaPreviewActivity : AppCompatActivity() {
 
@@ -17,6 +19,10 @@ class MediaPreviewActivity : AppCompatActivity() {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN)
-        setContentView(R.layout.activity_camera)
+        setContentView(R.layout.activity_media_preview)
+
+        val file = intent.getStringExtra("file")
+        val imageView = findViewById<ImageView>(R.id.imagePreview)
+        longToast(file)
     }
 }
