@@ -24,7 +24,9 @@ import me.texx.Texx.util.ThemeUtil.getThemeName
  * for more information on developing a Settings UI.
  */
 class SettingsActivity : PreferenceActivity() {
-
+    /**
+     * Set initial configuration
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         matchDressCode()
         super.onCreate(savedInstanceState)
@@ -39,6 +41,9 @@ class SettingsActivity : PreferenceActivity() {
         actionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
+    /**
+     * For calls from fragment classes (non-activity)
+     */
     fun updateTheme() {
         dressCodeName = getThemeName(this)
     }
@@ -88,12 +93,18 @@ class SettingsActivity : PreferenceActivity() {
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     class GeneralPreferenceFragment : PreferenceFragment() {
+        /**
+         * Set initial configuration
+         */
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
             addPreferencesFromResource(R.xml.pref_general)
             setHasOptionsMenu(true)
         }
 
+        /**
+         * Listener for click onto element of [preference] list (=> tree)
+         */
         override fun onPreferenceTreeClick(preferenceScreen: PreferenceScreen?, preference: Preference?): Boolean {
             if (preference?.key == "dark_theme_switch") {
                 (activity as SettingsActivity).updateTheme()
@@ -121,6 +132,9 @@ class SettingsActivity : PreferenceActivity() {
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     class AccountPreferenceFragment : PreferenceFragment() {
+        /**
+         * Set initial configuration
+         */
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
             addPreferencesFromResource(R.xml.pref_account)
@@ -147,7 +161,6 @@ class SettingsActivity : PreferenceActivity() {
     }
 
     companion object {
-
         /**
          * A preference value change listener that updates the preference's summary
          * to reflect its new value.

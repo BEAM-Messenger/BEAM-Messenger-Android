@@ -230,6 +230,9 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         addEmailsToAutoComplete(emails)
     }
 
+    /**
+     * Listener for loader reset
+     */
     override fun onLoaderReset(cursorLoader: Loader<Cursor>) {
 
     }
@@ -242,6 +245,9 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         email.setAdapter(adapter)
     }
 
+    /**
+     * Checks for email to insert
+     */
     object ProfileQuery {
         val PROJECTION = arrayOf(
                 ContactsContract.CommonDataKinds.Email.ADDRESS,

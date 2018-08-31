@@ -10,8 +10,14 @@ import daio.io.dresscode.dressCodeName
 import daio.io.dresscode.matchDressCode
 import me.texx.Texx.util.ThemeUtil.getThemeName
 
+/**
+ * Activity which will be shown after you've taken a picture
+ * Previews the taken picture and posts it if you want
+ */
 class MediaPreviewActivity : AppCompatActivity() {
-
+    /**
+     * Set initial configuration
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         matchDressCode()
         super.onCreate(savedInstanceState)

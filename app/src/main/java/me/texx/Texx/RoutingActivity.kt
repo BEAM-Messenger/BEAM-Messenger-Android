@@ -19,6 +19,9 @@ import java.io.IOException
 class RoutingActivity : AppCompatActivity() {
     private val serverAddress = "192.168.137.1"
 
+    /**
+     * Set initial configuration
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         matchDressCode()
         super.onCreate(savedInstanceState)

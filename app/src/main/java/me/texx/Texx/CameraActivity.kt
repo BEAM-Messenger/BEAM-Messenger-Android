@@ -28,9 +28,14 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
-
+/**
+ * Activity to either record a video or take a photo
+ * Output will be saved and redirected to corresponding preview activity
+ */
 class CameraActivity : AppCompatActivity() {
-
+    /**
+     * Set initial configuration
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         matchDressCode()
         super.onCreate(savedInstanceState)
@@ -125,18 +130,27 @@ class CameraActivity : AppCompatActivity() {
         return "Texx_$timestamp.jpg"
     }
 
+    /**
+     * Start components on activity resume (called at start)
+     */
     override fun onResume() {
         super.onResume()
         camera.start()
     }
 
+    /**
+     * Stop components on activity pause
+     */
     override fun onPause() {
         super.onPause()
         camera.stop()
     }
 
+    /**
+     * Destroy components on activity close
+     */
     override fun onDestroy() {
         super.onDestroy()
-        camera.destroy()
+        camera.destroy() // doesn't really destroys your camera lol
     }
 }

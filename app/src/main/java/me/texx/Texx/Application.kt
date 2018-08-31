@@ -4,8 +4,13 @@ import android.app.Application
 import daio.io.dresscode.DressCode
 import daio.io.dresscode.declareDressCode
 
+/**
+ * Main Application class mainly for handling themes
+ */
 class Application : Application() {
-
+    /**
+     * Set initial configuration
+     */
     override fun onCreate() {
         super.onCreate()
 
