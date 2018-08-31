@@ -20,7 +20,11 @@ import daio.io.dresscode.matchDressCode
 import kotlinx.android.synthetic.main.activity_camera.*
 import me.texx.Texx.util.ThemeUtil.getThemeName
 import org.jetbrains.anko.intentFor
+import org.jetbrains.anko.longToast
 import java.io.File
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -54,8 +58,9 @@ class CameraActivity : AppCompatActivity() {
     private fun setListeners() {
         camera.addCameraListener(object : CameraListener() {
             override fun onPictureTaken(jpeg: ByteArray?) {
-                val file: File? = saveImage(BitmapFactory.decodeByteArray(jpeg, 0, jpeg!!.size))
-                startActivity(intentFor<MediaPreviewActivity>("file" to file))
+                val file: File? = createFile()
+                writeFile(BitmapFactory.decodeByteArray(jpeg, 0, jpeg!!.size), file)
+                startActivity(intentFor<MediaPreviewActivity>("filepath" to file.toString()))
             }
         })
 
@@ -80,18 +85,36 @@ class CameraActivity : AppCompatActivity() {
     /**
      * Saves [bitmap] in local storage and returns the absolute path [String] of the file
      */
-    private fun saveImage(bitmap: Bitmap): File? {
+    private fun writeFile(bitmap: Bitmap, file: File?) {
+        if (file == null) {
+            longToast("Error creating file - please check the storage permission.)")
+            return
+        }
+        try {
+            val out = FileOutputStream(file)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
+            out.close()
+        } catch (e: FileNotFoundException) {
+            longToast("File not found - please try again.\n(${e.message})")
+        } catch (e: IOException) {
+            longToast("Error accessing file - please try again.\n(${e.message})")
+        }
+    }
+
+    /**
+     * Creates empty file to write the file on
+     */
+    private fun createFile(): File? {
         val mediaStorageDir = File(Environment.getExternalStorageDirectory().toString()
-                + "/Android/data/"
+                + "/Android/media/"
                 + applicationContext.packageName
-                + "/Files")
+                + "/Images")
 
         if (!mediaStorageDir.exists()) {
             if (!mediaStorageDir.mkdirs()) {
                 return null
             }
         }
-
         val mediaFile: File
         mediaFile = File(mediaStorageDir.path + File.separator + generateFilename())
         return mediaFile

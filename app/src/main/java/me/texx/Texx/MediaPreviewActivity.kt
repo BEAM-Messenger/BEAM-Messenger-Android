@@ -1,5 +1,6 @@
 package me.texx.Texx
 
+import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Window
@@ -8,7 +9,6 @@ import android.widget.ImageView
 import daio.io.dresscode.dressCodeName
 import daio.io.dresscode.matchDressCode
 import me.texx.Texx.util.ThemeUtil.getThemeName
-import org.jetbrains.anko.longToast
 
 class MediaPreviewActivity : AppCompatActivity() {
 
@@ -21,8 +21,8 @@ class MediaPreviewActivity : AppCompatActivity() {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_media_preview)
 
-        val file = intent.getStringExtra("file")
+        val filepath = intent.getStringExtra("filepath")
         val imageView = findViewById<ImageView>(R.id.imagePreview)
-        longToast(file)
+        imageView.setImageURI(Uri.parse(filepath))
     }
 }
