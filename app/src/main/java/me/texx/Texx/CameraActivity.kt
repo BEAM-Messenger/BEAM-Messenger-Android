@@ -47,6 +47,7 @@ class CameraActivity : AppCompatActivity() {
     }
 
     private fun initCameraLayout() {
+        camera.sessionType = SessionType.VIDEO // TODO: Find out why VIDEO is faster (-> any disadvantages?)
         setGestures()
         setListeners()
     }
@@ -62,7 +63,7 @@ class CameraActivity : AppCompatActivity() {
         camera.addCameraListener(object : CameraListener() {
             override fun onPictureTaken(jpeg: ByteArray?) {
                 val file: File? = createFile()
-                SavePhotoTask(file).execute(jpeg)
+                SaveFileTask(file).execute(jpeg)
                 startActivity(intentFor<PhotoEditorActivity>("filepath" to file.toString()))
             }
         })
@@ -78,7 +79,7 @@ class CameraActivity : AppCompatActivity() {
                 videoButtonDrawable.colorFilter = PorterDuffColorFilter(RED, PorterDuff.Mode.SRC_IN)
                 camera_button.setBackgroundDrawable(videoButtonDrawable)
             } else {
-                camera.sessionType = SessionType.PICTURE
+                //camera.sessionType = SessionType.PICTURE // -> faster?
                 camera_button.setBackgroundDrawable(this.resources.getDrawable(R.drawable.focus_marker_outline))
             }
             true
@@ -88,7 +89,7 @@ class CameraActivity : AppCompatActivity() {
     /**
      * Saves [ByteArray] in [file]
      */
-    internal inner class SavePhotoTask(private val file: File?) : AsyncTask<ByteArray, String, String>() {
+    internal inner class SaveFileTask(private val file: File?) : AsyncTask<ByteArray, String, String>() {
         override fun doInBackground(vararg jpeg: ByteArray): String? {
             try {
                 val out = FileOutputStream(file!!.path)
