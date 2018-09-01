@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    tools:context=".PhotoEditorActivity">
+
+    <ja.burhanrashid52.photoeditor.PhotoEditorView
+        android:id="@+id/imageEditor"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="Kwel image"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
+
+    </ja.burhanrashid52.photoeditor.PhotoEditorView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="24dp"
+        android:clickable="true"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_send_black_24dp" />
+
+    <Button
+        android:id="@+id/photoDrawButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/ic_mode_edit_black_24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.rtugeek.android.colorseekbar.ColorSeekBar
+        android:id="@+id/drawColorSeekbar"
+        android:layout_width="50dp"
+        android:layout_height="300dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="16dp"
+        android:visibility="gone"
+        app:barHeight="15dp"
+        app:colorSeeds="@array/material_colors"
+        app:isVertical="true"
+        app:layout_constraintEnd_toEndOf="@+id/imageEditor"
+        app:layout_constraintTop_toBottomOf="@+id/photoDrawButton"
+        app:thumbHeight="40dp" />
+
+</android.support.constraint.ConstraintLayout>

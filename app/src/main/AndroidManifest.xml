@@ -44,7 +44,7 @@
                 android:value="me.texx.Texx.MainActivity" />
         </activity>
         <activity android:name=".CameraActivity" />
-        <activity android:name=".MediaPreviewActivity"></activity>
+        <activity android:name=".PhotoEditorActivity"></activity>
     </application>
 
 </manifest>

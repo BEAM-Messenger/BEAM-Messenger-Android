@@ -65,7 +65,7 @@ class CameraActivity : AppCompatActivity() {
             override fun onPictureTaken(jpeg: ByteArray?) {
                 val file: File? = createFile()
                 writeFile(BitmapFactory.decodeByteArray(jpeg, 0, jpeg!!.size), file)
-                startActivity(intentFor<MediaPreviewActivity>("filepath" to file.toString()))
+                startActivity(intentFor<PhotoEditorActivity>("filepath" to file.toString()))
             }
         })
 
