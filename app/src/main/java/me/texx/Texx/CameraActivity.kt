@@ -1,11 +1,10 @@
 package me.texx.Texx
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Color.RED
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.Drawable
+import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Environment
 import android.support.v7.app.AppCompatActivity
@@ -22,11 +21,10 @@ import me.texx.Texx.util.ThemeUtil.getThemeName
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.longToast
 import java.io.File
-import java.io.FileNotFoundException
 import java.io.FileOutputStream
-import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 /**
  * Activity to either record a video or take a photo
@@ -64,7 +62,7 @@ class CameraActivity : AppCompatActivity() {
         camera.addCameraListener(object : CameraListener() {
             override fun onPictureTaken(jpeg: ByteArray?) {
                 val file: File? = createFile()
-                writeFile(BitmapFactory.decodeByteArray(jpeg, 0, jpeg!!.size), file)
+                SavePhotoTask(file).execute(jpeg)
                 startActivity(intentFor<PhotoEditorActivity>("filepath" to file.toString()))
             }
         })
@@ -88,26 +86,25 @@ class CameraActivity : AppCompatActivity() {
     }
 
     /**
-     * Saves [bitmap] in local storage and returns the absolute path [String] of the file
+     * Saves [ByteArray] in [file]
      */
-    private fun writeFile(bitmap: Bitmap, file: File?) {
-        if (file == null) {
-            longToast("Error creating file - please check the storage permission.)")
-            return
-        }
-        try {
-            val out = FileOutputStream(file)
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
-            out.close()
-        } catch (e: FileNotFoundException) {
-            longToast("File not found - please try again.\n(${e.message})")
-        } catch (e: IOException) {
-            longToast("Error accessing file - please try again.\n(${e.message})")
+    internal inner class SavePhotoTask(private val file: File?) : AsyncTask<ByteArray, String, String>() {
+        override fun doInBackground(vararg jpeg: ByteArray): String? {
+            try {
+                val out = FileOutputStream(file!!.path)
+
+                out.write(jpeg[0])
+                out.close()
+            } catch (e: java.io.IOException) {
+                longToast("Exception in photoCallback $e")
+            }
+
+            return null
         }
     }
 
     /**
-     * Creates empty file to write the file on
+     * Creates empty [File] to write the file on
      */
     private fun createFile(): File? {
         val mediaStorageDir = File(Environment.getExternalStorageDirectory().toString()
@@ -125,6 +122,9 @@ class CameraActivity : AppCompatActivity() {
         return mediaFile
     }
 
+    /**
+     * Generates filename [String] by using current timestamp
+     */
     private fun generateFilename(): String {
         val timestamp = SimpleDateFormat("ddMMyyyy_HHmm").format(Date())
         return "Texx_$timestamp.jpg"
