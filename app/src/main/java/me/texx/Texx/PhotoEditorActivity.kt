@@ -2,6 +2,7 @@ package me.texx.Texx
 
 import android.net.Uri
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.Window
@@ -55,7 +56,7 @@ class PhotoEditorActivity : AppCompatActivity() {
             if (currentlyDrawing) drawColorSeekbar.visibility = View.VISIBLE
             else {
                 drawColorSeekbar.visibility = View.GONE
-                photoDrawButton.setBackgroundColor(View.INVISIBLE)
+                photoDrawButton.background = ContextCompat.getDrawable(this, R.drawable.ic_mode_edit_white_24dp)
             }
         }
 
