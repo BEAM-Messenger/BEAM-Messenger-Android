@@ -49,6 +49,9 @@ class PhotoEditorActivity : AppCompatActivity() {
     private fun setButtonListeners(photoEditor: PhotoEditor) {
         var currentlyDrawing = false
 
+        undoButton.setOnClickListener { photoEditor.undo() }
+        redoButton.setOnClickListener { photoEditor.redo() }
+
         photoDrawButton.setOnClickListener {
             currentlyDrawing = !currentlyDrawing
             photoEditor.setBrushDrawingMode(currentlyDrawing)
