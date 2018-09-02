@@ -47,7 +47,7 @@ class CameraActivity : AppCompatActivity() {
     }
 
     private fun initCameraLayout() {
-        camera.sessionType = SessionType.VIDEO // TODO: Find out why VIDEO is faster (-> any disadvantages?)
+        camera.sessionType = SessionType.PICTURE
         setGestures()
         setListeners()
     }
@@ -79,7 +79,7 @@ class CameraActivity : AppCompatActivity() {
                 videoButtonDrawable.colorFilter = PorterDuffColorFilter(RED, PorterDuff.Mode.SRC_IN)
                 camera_button.setBackgroundDrawable(videoButtonDrawable)
             } else {
-                //camera.sessionType = SessionType.PICTURE // -> faster?
+                camera.sessionType = SessionType.PICTURE
                 camera_button.setBackgroundDrawable(this.resources.getDrawable(R.drawable.focus_marker_outline))
             }
             true
