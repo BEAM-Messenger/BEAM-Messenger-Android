@@ -46,6 +46,7 @@
         <activity android:name=".CameraActivity" />
         <activity android:name=".PhotoEditorActivity" />
         <activity android:name=".IntroActivity" />
+        <activity android:name=".BugReportActivity"></activity>
     </application>
 
 </manifest>
