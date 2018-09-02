@@ -59,6 +59,8 @@ class CameraActivity : AppCompatActivity() {
         camera.mapGesture(Gesture.SCROLL_HORIZONTAL, GestureAction.EXPOSURE_CORRECTION)
     }
 
+    private val takingPicture = camera.sessionType == SessionType.PICTURE
+
     private fun setListeners() {
         camera.addCameraListener(object : CameraListener() {
             override fun onPictureTaken(jpeg: ByteArray?) {
@@ -69,11 +71,14 @@ class CameraActivity : AppCompatActivity() {
         })
 
         camera_button.setOnClickListener {
-            camera.capturePicture()
+            if (takingPicture)
+                camera.capturePicture()
+            else
+                camera.startCapturingVideo()
         }
 
         camera_button.setOnLongClickListener {
-            if (camera.sessionType == SessionType.PICTURE) {
+            if (takingPicture) {
                 camera.sessionType = SessionType.VIDEO
                 val videoButtonDrawable: Drawable = this.resources.getDrawable(R.drawable.focus_marker_outline)
                 videoButtonDrawable.colorFilter = PorterDuffColorFilter(RED, PorterDuff.Mode.SRC_IN)
