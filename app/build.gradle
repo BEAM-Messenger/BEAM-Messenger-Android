@@ -24,6 +24,7 @@ android {
 }
 
 dependencies {
+    implementation 'com.github.apl-devs:appintro:v4.2.3'
     implementation 'com.otaliastudios:cameraview:1.5.1'
     implementation 'com.github.mukeshsolanki:easypreferences:1.0.6'
     implementation 'com.kazakago.cryptore:cryptore:1.3.0'

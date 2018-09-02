@@ -28,10 +28,17 @@ class RoutingActivity : AppCompatActivity() {
         dressCodeName = getThemeName(this)
 
         FuelManager.instance.basePath = "http://$serverAddress"
-        alert("Logging you in.", "Loading...") {
-            isCancelable = false
-        }.show()
-        verifyLogin()
+
+        if (EasyPrefrences(this@RoutingActivity).getBoolean("previously_started")) {
+            alert("Logging you in.", "Loading...") {
+                isCancelable = false
+            }.show()
+            verifyLogin()
+        } else {
+            EasyPrefrences(this@RoutingActivity).putBoolean("previously_started", true)
+            startActivity<IntroActivity>()
+        }
+
     }
 
     /**
