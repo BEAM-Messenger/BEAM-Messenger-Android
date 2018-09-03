@@ -11,6 +11,7 @@ import com.madapps.prefrences.EasyPrefrences
 import daio.io.dresscode.dressCodeName
 import daio.io.dresscode.matchDressCode
 import kotlinx.android.synthetic.main.activity_bug_report.*
+import me.texx.Texx.Util.SecureStorage
 import me.texx.Texx.util.ThemeUtil
 import org.jetbrains.anko.longToast
 import org.json.JSONObject

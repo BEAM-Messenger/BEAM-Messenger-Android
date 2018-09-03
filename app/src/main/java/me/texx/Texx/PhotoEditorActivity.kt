@@ -52,21 +52,25 @@ class PhotoEditorActivity : AppCompatActivity() {
         undoButton.setOnClickListener { photoEditor.undo() }
         redoButton.setOnClickListener { photoEditor.redo() }
 
-        photoDrawButton.setOnClickListener {
+        drawButton.setOnClickListener {
             currentlyDrawing = !currentlyDrawing
             photoEditor.setBrushDrawingMode(currentlyDrawing)
 
-            if (currentlyDrawing) drawColorSeekbar.visibility = View.VISIBLE
+            if (currentlyDrawing) colorSeekbar.visibility = View.VISIBLE
             else {
-                drawColorSeekbar.visibility = View.GONE
-                photoDrawButton.background = ContextCompat.getDrawable(this, R.drawable.ic_mode_edit_white_24dp)
+                colorSeekbar.visibility = View.GONE
+                drawButton.background = ContextCompat.getDrawable(this, R.drawable.ic_mode_edit_white_24dp)
             }
         }
 
-        drawColorSeekbar.setOnColorChangeListener { _, _, color ->
+        typeButton.setOnClickListener {
+            photoEditor.addText("", 123)
+        }
+
+        colorSeekbar.setOnColorChangeListener { _, _, color ->
             if (currentlyDrawing) {
                 photoEditor.brushColor = color
-                photoDrawButton.setBackgroundColor(color)
+                drawButton.setBackgroundColor(color)
             }
         }
     }

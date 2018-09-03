@@ -1,7 +1,8 @@
 package me.texx.Texx
 
-import android.Manifest
-import android.content.pm.PackageManager
+import android.Manifest.permission.ACCESS_FINE_LOCATION
+import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+import android.annotation.SuppressLint
 import android.graphics.Color.RED
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
@@ -10,7 +11,6 @@ import android.location.Location
 import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Environment
-import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.Window
 import android.view.WindowManager
@@ -23,11 +23,11 @@ import com.otaliastudios.cameraview.SessionType
 import daio.io.dresscode.dressCodeName
 import daio.io.dresscode.matchDressCode
 import kotlinx.android.synthetic.main.activity_camera.*
+import me.texx.Texx.Util.PermissionUtil.askForPermission
+import me.texx.Texx.Util.PermissionUtil.permissionGranted
 import me.texx.Texx.util.ThemeUtil.getThemeName
-import org.jetbrains.anko.alert
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.longToast
-import org.jetbrains.anko.startActivity
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
@@ -52,8 +52,6 @@ class CameraActivity : AppCompatActivity() {
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_camera)
-
-        initLocation()
         initCamera()
     }
 
@@ -73,12 +71,11 @@ class CameraActivity : AppCompatActivity() {
     private fun setListeners() {
         camera.addCameraListener(object : CameraListener() {
             override fun onPictureTaken(jpeg: ByteArray?) {
-                if (ContextCompat.checkSelfPermission(this@CameraActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                askForPermission(WRITE_EXTERNAL_STORAGE, this@CameraActivity)
+                if (permissionGranted(WRITE_EXTERNAL_STORAGE, this@CameraActivity)) {
                     val file: File? = createFile()
                     SaveFileTask(file).execute(jpeg)
                     startActivity(intentFor<PhotoEditorActivity>("filepath" to file.toString()))
-                } else {
-                    triggerPermissionError("Storage")
                 }
             }
         })
@@ -152,8 +149,10 @@ class CameraActivity : AppCompatActivity() {
     /**
      * Initializes location service
      */
+    @SuppressLint("MissingPermission") // as this is handled but not recognized
     private fun initLocation() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        askForPermission(ACCESS_FINE_LOCATION, this@CameraActivity)
+        if (permissionGranted(ACCESS_FINE_LOCATION, this@CameraActivity)) {
             locationCLient = LocationServices.getFusedLocationProviderClient(this)
             locationCLient.lastLocation
                     .addOnSuccessListener { location: Location? ->
@@ -162,20 +161,6 @@ class CameraActivity : AppCompatActivity() {
                         }
                     }
         }
-    }
-
-    /**
-     * Triggers permission error if permission wasn't granted
-     */
-    private fun triggerPermissionError(permission: String) {
-        alert("You have to give this app the $permission permission to work properly.",
-                "Error") {
-            isCancelable = false
-            positiveButton("Okay") {
-                finishAffinity()
-                startActivity<MainActivity>()
-            }
-        }.show()
     }
 
     /**
