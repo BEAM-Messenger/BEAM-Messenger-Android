@@ -32,30 +32,6 @@
         app:srcCompat="@drawable/ic_send_black_24dp" />
 
     <Button
-        android:id="@+id/photoDrawButton"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/ic_mode_edit_white_24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.rtugeek.android.colorseekbar.ColorSeekBar
-        android:id="@+id/drawColorSeekbar"
-        android:layout_width="38dp"
-        android:layout_height="300dp"
-        android:layout_marginEnd="28dp"
-        android:layout_marginTop="24dp"
-        android:visibility="gone"
-        app:barHeight="15dp"
-        app:colorSeeds="@array/material_colors"
-        app:isVertical="true"
-        app:layout_constraintEnd_toEndOf="@+id/imageEditor"
-        app:layout_constraintTop_toBottomOf="@+id/photoDrawButton"
-        app:thumbHeight="40dp" />
-
-    <Button
         android:id="@+id/undoButton"
         android:layout_width="30dp"
         android:layout_height="30dp"
@@ -78,5 +54,39 @@
         android:background="@drawable/ic_redo_white_24dp"
         app:layout_constraintStart_toEndOf="@+id/undoButton"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/drawButton"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/ic_mode_edit_white_24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/typeButton"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/ic_text_fields_white_24dp"
+        app:layout_constraintEnd_toStartOf="@+id/drawButton"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.rtugeek.android.colorseekbar.ColorSeekBar
+        android:id="@+id/colorSeekbar"
+        android:layout_width="38dp"
+        android:layout_height="300dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginTop="24dp"
+        android:visibility="gone"
+        app:barHeight="15dp"
+        app:colorSeeds="@array/material_colors"
+        app:isVertical="true"
+        app:layout_constraintEnd_toEndOf="@+id/imageEditor"
+        app:layout_constraintTop_toBottomOf="@+id/drawButton"
+        app:thumbHeight="40dp" />
 
 </android.support.constraint.ConstraintLayout>
