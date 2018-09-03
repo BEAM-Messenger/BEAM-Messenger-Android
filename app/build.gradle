@@ -27,7 +27,6 @@ dependencies {
     /*
         General libraries
      */
-    implementation 'com.github.paolorotolo:gitty_reporter:1.2.1' // bug report
     implementation 'com.github.apl-devs:appintro:v4.2.3' // app introduction
     implementation 'com.otaliastudios:cameraview:1.5.1' // camera activity
     implementation 'com.github.mukeshsolanki:easypreferences:1.0.6' // shared preferences
