@@ -1,6 +1,7 @@
 package me.texx.Texx
 
 import android.os.Bundle
+import android.os.StrictMode
 import android.support.v7.app.AppCompatActivity
 import com.github.kittinunf.fuel.android.extension.responseJson
 import com.github.kittinunf.fuel.core.FuelManager
@@ -11,6 +12,9 @@ import daio.io.dresscode.matchDressCode
 import me.texx.Texx.util.ThemeUtil.getThemeName
 import org.jetbrains.anko.*
 import java.io.IOException
+import java.net.InetSocketAddress
+import java.net.Socket
+
 
 /**
  * Activity which will be run before any other to verify user and choose which activity
@@ -44,10 +48,20 @@ class RoutingActivity : AppCompatActivity() {
     /**
      * Checks if client is connected to the internet by pinging google
      */
-    @Throws(InterruptedException::class, IOException::class)
-    fun isConnected(): Boolean {
-        val command = "ping -c 1 google.com"
-        return Runtime.getRuntime().exec(command).waitFor() == 0
+    private fun isConnected(): Boolean {
+        return try {
+            val policy = StrictMode.ThreadPolicy.Builder()
+                    .permitAll().build()
+            StrictMode.setThreadPolicy(policy)
+            val timeoutMs = 1500
+            val socket = Socket()
+            val socketAddress = InetSocketAddress("8.8.8.8", 53)
+            socket.connect(socketAddress, timeoutMs)
+            socket.close()
+            true
+        } catch (e: IOException) {
+            false
+        }
     }
 
     private fun verifyLogin() {
