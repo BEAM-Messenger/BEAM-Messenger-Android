@@ -38,8 +38,8 @@ dependencies {
     implementation 'com.github.rtugeek:colorseekbar:1.7.2' // colored seekBar
     implementation 'ja.burhanrashid52:photoeditor:0.3.3' // photo editing
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.anko:anko-commons:0.10.5" // anko
-    implementation "org.jetbrains.anko:anko-design:0.10.5" // anko
+    implementation "org.jetbrains.anko:anko-commons:0.10.5" // Anko
+    implementation "org.jetbrains.anko:anko-design:0.10.5" // Anko
 
     /*
         General Android
