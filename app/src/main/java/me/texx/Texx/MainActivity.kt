@@ -62,6 +62,10 @@ class MainActivity : AppCompatActivity() {
                 startActivity<SettingsActivity>()
                 true
             }
+            R.id.action_bug_report -> {
+                startActivity<BugReportActivity>()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }

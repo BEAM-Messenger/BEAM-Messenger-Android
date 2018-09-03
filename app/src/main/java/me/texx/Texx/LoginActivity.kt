@@ -300,7 +300,7 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             showProgress(false)
 
             if (success!!) {
-                startActivity<MainActivity>()
+                startActivity<RoutingActivity>()
                 longToast("Successfully logged in.")
             } else {
                 password.error = getString(R.string.error_incorrect_password)
