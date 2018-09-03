@@ -1,6 +1,6 @@
 # Texx
 <p align="center">
-    <i>„A high security laravel-based social network with end-to-end AES256 encryption“</i>
+    <i>„The Android App for the high security laravel-based social network with end-to-end AES256 encryption“</i>
     <br><br>
     <a target="_blank" href="https://texx.me"><img src="https://img.shields.io/website-up-down-green-red/https/texx.me.svg?label=website&style=for-the-badge" /></a>
 </p>
