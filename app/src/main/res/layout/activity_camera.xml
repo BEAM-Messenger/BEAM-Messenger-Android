@@ -7,7 +7,7 @@
     tools:context=".CameraActivity">
 
     <Button
-        android:id="@+id/camera_button"
+        android:id="@+id/button_camera"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginBottom="48dp"

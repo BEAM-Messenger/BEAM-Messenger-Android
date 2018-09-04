@@ -80,22 +80,22 @@ class CameraActivity : AppCompatActivity() {
             }
         })
 
-        camera_button.setOnClickListener {
+        button_camera.setOnClickListener {
             if (camera.sessionType == SessionType.PICTURE)
                 camera.capturePicture()
             else
                 camera.startCapturingVideo()
         }
 
-        camera_button.setOnLongClickListener {
+        button_camera.setOnLongClickListener {
             if (camera.sessionType == SessionType.PICTURE) {
                 camera.sessionType = SessionType.VIDEO
                 val videoButtonDrawable: Drawable = this.resources.getDrawable(R.drawable.focus_marker_outline)
                 videoButtonDrawable.colorFilter = PorterDuffColorFilter(RED, PorterDuff.Mode.SRC_IN)
-                camera_button.setBackgroundDrawable(videoButtonDrawable)
+                button_camera.setBackgroundDrawable(videoButtonDrawable)
             } else {
                 camera.sessionType = SessionType.PICTURE
-                camera_button.setBackgroundDrawable(this.resources.getDrawable(R.drawable.focus_marker_outline))
+                button_camera.setBackgroundDrawable(this.resources.getDrawable(R.drawable.focus_marker_outline))
             }
             true
         }

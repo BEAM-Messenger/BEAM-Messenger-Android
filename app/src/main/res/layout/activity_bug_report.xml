@@ -24,15 +24,31 @@
             android:layout_marginStart="24dp"
             android:ems="10"
             android:hint="@string/bug_report_edit_title_hint"
-            android:inputType="text|textAutoCorrect"
+            android:inputType="text|textCapCharacters|textCapWords|textCapSentences|textAutoCorrect|textAutoComplete"
             app:layout_constraintBottom_toTopOf="@+id/edit_description"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title" />
 
+        <EditText
+            android:id="@+id/edit_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:ems="10"
+            android:hint="@string/bug_report_edit_description"
+            android:inputType="textCapCharacters|textCapWords|textCapSentences|textAutoCorrect|textAutoComplete|textMultiLine"
+            app:layout_constraintBottom_toTopOf="@+id/text_debug"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_title" />
+
         <TextView
-            android:id="@+id/debug_text"
+            android:id="@+id/text_debug"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
@@ -53,22 +69,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/ic_send_black_24dp" />
-
-        <EditText
-            android:id="@+id/edit_description"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:ems="10"
-            android:hint="@string/bug_report_edit_description"
-            android:inputType="textMultiLine"
-            app:layout_constraintBottom_toTopOf="@+id/debug_text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_title" />
 
         <TextView
             android:id="@+id/title"

@@ -48,7 +48,7 @@ class PhotoEditorActivity : AppCompatActivity() {
 
     private fun initPhotoEditor() {
         val filepath = intent.getStringExtra("filepath")
-        val imageEditorView = findViewById<PhotoEditorView>(R.id.imageEditor)
+        val imageEditorView = findViewById<PhotoEditorView>(R.id.image_editor)
         imageEditorView.source.setImageURI(Uri.parse(filepath))
 
         val photoEditor = PhotoEditor.Builder(this, imageEditorView)
@@ -62,35 +62,35 @@ class PhotoEditorActivity : AppCompatActivity() {
     private fun setButtonListeners(photoEditor: PhotoEditor) {
 
         // undo button
-        undoButton.setOnClickListener { photoEditor.undo() }
+        button_undo.setOnClickListener { photoEditor.undo() }
 
         // redo button
-        redoButton.setOnClickListener { photoEditor.redo() }
+        button_redo.setOnClickListener { photoEditor.redo() }
 
         // draw button
-        drawButton.setOnClickListener {
+        button_draw.setOnClickListener {
             currentlyDrawing = !currentlyDrawing
             photoEditor.setBrushDrawingMode(currentlyDrawing)
 
-            if (currentlyDrawing) colorSeekbar.visibility = View.VISIBLE
+            if (currentlyDrawing) seekbar_color.visibility = View.VISIBLE
             else {
-                colorSeekbar.visibility = View.GONE
-                drawButton.background = ContextCompat.getDrawable(this, R.drawable.ic_mode_edit_white_24dp)
+                seekbar_color.visibility = View.GONE
+                button_draw.background = ContextCompat.getDrawable(this, R.drawable.ic_mode_edit_white_24dp)
             }
         }
 
         // type button
-        typeButton.setOnClickListener {
+        button_type.setOnClickListener {
             currentlyTyping = !currentlyTyping
             if (currentlyTyping) showTextEditor("")
             else hideTextEditor()
         }
 
         // text editing "view" for on photo typing
-        editText.setOnEditorActionListener { _, actionId, _ ->
+        text_edit.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                photoEditor.addText(editText.text.toString(), typingColor)
-                editText.visibility = View.GONE
+                photoEditor.addText(text_edit.text.toString(), typingColor)
+                text_edit.visibility = View.GONE
             }
             return@setOnEditorActionListener true
         }
@@ -111,30 +111,30 @@ class PhotoEditorActivity : AppCompatActivity() {
         })
 
         // color seekbar
-        colorSeekbar.setOnColorChangeListener { _, _, color ->
+        seekbar_color.setOnColorChangeListener { _, _, color ->
             if (currentlyDrawing) {
                 photoEditor.brushColor = color
-                drawButton.setBackgroundColor(color)
+                button_draw.setBackgroundColor(color)
             } else if (currentlyTyping) {
                 typingColor = color
-                typeButton.setBackgroundColor(color)
+                button_type.setBackgroundColor(color)
             }
         }
     }
 
     private fun showTextEditor(text: String) {
-        colorSeekbar.visibility = View.VISIBLE
-        editText.visibility = View.VISIBLE
-        editText.imeOptions = EditorInfo.IME_ACTION_DONE
-        editText.setText(text)
-        editText.requestFocusFromTouch() // set focus
+        seekbar_color.visibility = View.VISIBLE
+        text_edit.visibility = View.VISIBLE
+        text_edit.imeOptions = EditorInfo.IME_ACTION_DONE
+        text_edit.setText(text)
+        text_edit.requestFocusFromTouch() // set focus
         val inputManager = this@PhotoEditorActivity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputManager.showSoftInput(editText, 0)
+        inputManager.showSoftInput(text_edit, 0)
     }
 
     private fun hideTextEditor() {
-        typeButton.background = ContextCompat.getDrawable(this, R.drawable.ic_text_fields_white_24dp)
-        colorSeekbar.visibility = View.GONE
-        editText.visibility = View.GONE
+        button_type.background = ContextCompat.getDrawable(this, R.drawable.ic_text_fields_white_24dp)
+        seekbar_color.visibility = View.GONE
+        text_edit.visibility = View.GONE
     }
 }

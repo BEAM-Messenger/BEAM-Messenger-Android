@@ -8,7 +8,7 @@
     tools:context=".PhotoEditorActivity">
 
     <ja.burhanrashid52.photoeditor.PhotoEditorView
-        android:id="@+id/imageEditor"
+        android:id="@+id/image_editor"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="Kwel image"
@@ -20,7 +20,7 @@
     </ja.burhanrashid52.photoeditor.PhotoEditorView>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
@@ -32,7 +32,7 @@
         app:srcCompat="@drawable/ic_send_black_24dp" />
 
     <Button
-        android:id="@+id/undoButton"
+        android:id="@+id/button_undo"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_alignParentStart="true"
@@ -44,7 +44,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/redoButton"
+        android:id="@+id/button_redo"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_alignParentEnd="true"
@@ -52,11 +52,11 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/ic_redo_white_24dp"
-        app:layout_constraintStart_toEndOf="@+id/undoButton"
+        app:layout_constraintStart_toEndOf="@+id/button_undo"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/drawButton"
+        android:id="@+id/button_draw"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginEnd="24dp"
@@ -66,17 +66,17 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/typeButton"
+        android:id="@+id/button_type"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/ic_text_fields_white_24dp"
-        app:layout_constraintEnd_toStartOf="@+id/drawButton"
+        app:layout_constraintEnd_toStartOf="@+id/button_draw"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.rtugeek.android.colorseekbar.ColorSeekBar
-        android:id="@+id/colorSeekbar"
+        android:id="@+id/seekbar_color"
         android:layout_width="38dp"
         android:layout_height="300dp"
         android:layout_marginEnd="28dp"
@@ -85,12 +85,12 @@
         app:barHeight="15dp"
         app:colorSeeds="@array/material_colors"
         app:isVertical="true"
-        app:layout_constraintEnd_toEndOf="@+id/imageEditor"
-        app:layout_constraintTop_toBottomOf="@+id/drawButton"
+        app:layout_constraintEnd_toEndOf="@+id/image_editor"
+        app:layout_constraintTop_toBottomOf="@+id/button_draw"
         app:thumbHeight="40dp" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/text_edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"

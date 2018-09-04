@@ -32,7 +32,7 @@ class BugReportActivity : AppCompatActivity() {
         setContentView(R.layout.activity_bug_report)
 
         val debugInformation = getDebugInformation()
-        debug_text.text = debugInformation
+        text_debug.text = debugInformation
 
         fab.setOnClickListener {
             submitToGithub(debugInformation)
