@@ -42,6 +42,7 @@ class PhotoEditorActivity : AppCompatActivity() {
         initPhotoEditor()
     }
 
+    private lateinit var photoEditor: PhotoEditor
     private var currentlyDrawing = false
     private var currentlyTyping = false
     private var typingColor = RED
@@ -51,16 +52,15 @@ class PhotoEditorActivity : AppCompatActivity() {
         val imageEditorView = findViewById<PhotoEditorView>(R.id.image_editor)
         imageEditorView.source.setImageURI(Uri.parse(filepath))
 
-        val photoEditor = PhotoEditor.Builder(this, imageEditorView)
+        photoEditor = PhotoEditor.Builder(this, imageEditorView)
                 .setPinchTextScalable(true)
                 .setDefaultTextTypeface(Typeface.DEFAULT)
                 .build()
 
-        setButtonListeners(photoEditor)
+        setButtonListeners()
     }
 
-    private fun setButtonListeners(photoEditor: PhotoEditor) {
-
+    private fun setButtonListeners() {
         // undo button
         button_undo.setOnClickListener { photoEditor.undo() }
 
@@ -68,39 +68,21 @@ class PhotoEditorActivity : AppCompatActivity() {
         button_redo.setOnClickListener { photoEditor.redo() }
 
         // draw button
-        button_draw.setOnClickListener {
-            currentlyDrawing = !currentlyDrawing
-            photoEditor.setBrushDrawingMode(currentlyDrawing)
-
-            if (currentlyDrawing) seekbar_color.visibility = View.VISIBLE
-            else {
-                seekbar_color.visibility = View.GONE
-                button_draw.background = ContextCompat.getDrawable(this, R.drawable.ic_mode_edit_white_24dp)
-            }
-        }
+        button_draw.setOnClickListener { toggleDrawing() }
 
         // type button
-        button_type.setOnClickListener {
-            currentlyTyping = !currentlyTyping
-            if (currentlyTyping) showTextEditor("")
-            else hideTextEditor()
-        }
+        button_type.setOnClickListener { toggleTextEditing("") }
 
         // text editing "view" for on photo typing
-        text_edit.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                photoEditor.addText(text_edit.text.toString(), typingColor)
-                text_edit.visibility = View.GONE
-            }
-            return@setOnEditorActionListener true
-        }
+        text_edit.setOnEditorActionListener { _, actionId, _ -> return@setOnEditorActionListener textEditorViewHandler(actionId) }
+
+        // color seekbar
+        seekbar_color.setOnColorChangeListener { _, _, color -> colorHandler(color) }
 
         // text editing box on photo (long click)
         photoEditor.setOnPhotoEditorListener(object : OnPhotoEditorListener {
             override fun onEditTextChangeListener(rootView: View, text: String, colorCode: Int) {
-                currentlyTyping = !currentlyTyping
-                if (!currentlyTyping) showTextEditor("") // TODO: Fix editing of text
-                else hideTextEditor()
+                toggleTextEditing(text)
             }
 
             override fun onAddViewListener(viewType: ViewType, numberOfAddedViews: Int) {}
@@ -109,32 +91,51 @@ class PhotoEditorActivity : AppCompatActivity() {
             override fun onStartViewChangeListener(viewType: ViewType) {}
             override fun onStopViewChangeListener(viewType: ViewType) {}
         })
+    }
 
-        // color seekbar
-        seekbar_color.setOnColorChangeListener { _, _, color ->
-            if (currentlyDrawing) {
-                photoEditor.brushColor = color
-                button_draw.setBackgroundColor(color)
-            } else if (currentlyTyping) {
-                typingColor = color
-                button_type.setBackgroundColor(color)
-            }
+    private fun toggleDrawing() {
+        currentlyDrawing = !currentlyDrawing
+        photoEditor.setBrushDrawingMode(currentlyDrawing)
+
+        if (currentlyDrawing) seekbar_color.visibility = View.VISIBLE
+        else {
+            seekbar_color.visibility = View.GONE
+            button_draw.background = ContextCompat.getDrawable(this, R.drawable.ic_mode_edit_white_24dp)
         }
     }
 
-    private fun showTextEditor(text: String) {
-        seekbar_color.visibility = View.VISIBLE
-        text_edit.visibility = View.VISIBLE
-        text_edit.imeOptions = EditorInfo.IME_ACTION_DONE
-        text_edit.setText(text)
-        text_edit.requestFocusFromTouch() // set focus
-        val inputManager = this@PhotoEditorActivity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputManager.showSoftInput(text_edit, 0)
+    private fun toggleTextEditing(text: String) {
+        currentlyTyping = !currentlyTyping
+        if (currentlyTyping) {
+            seekbar_color.visibility = View.VISIBLE
+            text_edit.visibility = View.VISIBLE
+            text_edit.imeOptions = EditorInfo.IME_ACTION_DONE
+            text_edit.setText(text)
+            text_edit.requestFocusFromTouch() // set focus
+            val inputManager = this@PhotoEditorActivity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputManager.showSoftInput(text_edit, 0)
+        } else {
+            button_type.background = ContextCompat.getDrawable(this, R.drawable.ic_text_fields_white_24dp)
+            seekbar_color.visibility = View.GONE
+            text_edit.visibility = View.GONE
+        }
     }
 
-    private fun hideTextEditor() {
-        button_type.background = ContextCompat.getDrawable(this, R.drawable.ic_text_fields_white_24dp)
-        seekbar_color.visibility = View.GONE
-        text_edit.visibility = View.GONE
+    private fun textEditorViewHandler(actionId: Int): Boolean {
+        if (actionId == EditorInfo.IME_ACTION_DONE) {
+            photoEditor.addText(text_edit.text.toString(), typingColor)
+            text_edit.visibility = View.GONE
+        }
+        return true
+    }
+
+    private fun colorHandler(color: Int) {
+        if (currentlyDrawing) {
+            photoEditor.brushColor = color
+            button_draw.setBackgroundColor(color)
+        } else if (currentlyTyping) {
+            typingColor = color
+            button_type.setBackgroundColor(color)
+        }
     }
 }
