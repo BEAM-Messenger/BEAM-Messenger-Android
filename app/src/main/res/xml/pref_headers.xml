@@ -4,12 +4,12 @@
 
     <header
         android:fragment="me.texx.Texx.SettingsActivity$GeneralPreferenceFragment"
-        android:icon="@drawable/ic_settings_black_24dp"
+        android:icon="@drawable/ic_settings"
         android:title="@string/pref_header_general" />
 
     <header
         android:fragment="me.texx.Texx.SettingsActivity$AccountPreferenceFragment"
-        android:icon="@drawable/ic_account_circle_black_24dp"
+        android:icon="@drawable/ic_account_circle"
         android:title="@string/pref_header_account" />
 
 </preference-headers>

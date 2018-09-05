@@ -32,10 +32,10 @@ class IntroActivity : AppIntro2() {
     }
 
     private fun createSlides() {
-        addSlide(AppIntro2Fragment.newInstance("Texx", "For the people", R.drawable.logo_placeholder, Color.parseColor("#304ffe")))
+        addSlide(AppIntro2Fragment.newInstance("Texx", "For the people", R.drawable.ic_logo_placeholder, Color.parseColor("#304ffe")))
         addSlide(AppIntro2Fragment.newInstance("Camera", "If you want to take and upload pictures, please allow us to do so.",
-                R.drawable.logo_placeholder, Color.parseColor("#1976d2")))
-        addSlide(AppIntro2Fragment.newInstance("Log in", "Please register or login now.", R.drawable.logo_placeholder, Color.parseColor("#29b6f6")))
+                R.drawable.ic_logo_placeholder, Color.parseColor("#1976d2")))
+        addSlide(AppIntro2Fragment.newInstance("Log in", "Please register or login now.", R.drawable.ic_logo_placeholder, Color.parseColor("#29b6f6")))
     }
 
     override fun onDonePressed(currentFragment: Fragment) {

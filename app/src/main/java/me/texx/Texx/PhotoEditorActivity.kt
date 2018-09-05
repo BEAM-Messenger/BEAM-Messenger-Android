@@ -100,7 +100,7 @@ class PhotoEditorActivity : AppCompatActivity() {
         if (currentlyDrawing) seekbar_color.visibility = View.VISIBLE
         else {
             seekbar_color.visibility = View.GONE
-            button_draw.background = ContextCompat.getDrawable(this, R.drawable.ic_mode_edit_white_24dp)
+            button_draw.background = ContextCompat.getDrawable(this, R.drawable.btn_edit)
         }
     }
 
@@ -115,7 +115,7 @@ class PhotoEditorActivity : AppCompatActivity() {
             val inputManager = this@PhotoEditorActivity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             inputManager.showSoftInput(text_edit, 0)
         } else {
-            button_type.background = ContextCompat.getDrawable(this, R.drawable.ic_text_fields_white_24dp)
+            button_type.background = ContextCompat.getDrawable(this, R.drawable.btn_text)
             seekbar_color.visibility = View.GONE
             text_edit.visibility = View.GONE
         }

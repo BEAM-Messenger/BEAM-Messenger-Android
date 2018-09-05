@@ -29,7 +29,7 @@
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_send_black_24dp" />
+        app:srcCompat="@drawable/ic_fab_send" />
 
     <Button
         android:id="@+id/button_undo"
@@ -39,7 +39,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
-        android:background="@drawable/ic_undo_white_24dp"
+        android:background="@drawable/btn_undo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -51,7 +51,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
-        android:background="@drawable/ic_redo_white_24dp"
+        android:background="@drawable/btn_redo"
         app:layout_constraintStart_toEndOf="@+id/button_undo"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -61,7 +61,7 @@
         android:layout_height="30dp"
         android:layout_marginEnd="24dp"
         android:layout_marginTop="24dp"
-        android:background="@drawable/ic_mode_edit_white_24dp"
+        android:background="@drawable/btn_edit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -71,7 +71,7 @@
         android:layout_height="30dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="24dp"
-        android:background="@drawable/ic_text_fields_white_24dp"
+        android:background="@drawable/btn_text"
         app:layout_constraintEnd_toStartOf="@+id/button_draw"
         app:layout_constraintTop_toTopOf="parent" />
 
