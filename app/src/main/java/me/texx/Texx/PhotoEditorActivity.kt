@@ -70,6 +70,9 @@ class PhotoEditorActivity : AppCompatActivity() {
         // draw button
         button_draw.setOnClickListener { toggleDrawing() }
 
+        // emoji button
+        button_emoji.setOnClickListener { toggleEmojiMenu() }
+
         // type button
         button_type.setOnClickListener { toggleTextEditing("") }
 
@@ -91,6 +94,14 @@ class PhotoEditorActivity : AppCompatActivity() {
             override fun onStartViewChangeListener(viewType: ViewType) {}
             override fun onStopViewChangeListener(viewType: ViewType) {}
         })
+    }
+
+    private fun toggleEmojiMenu() {
+
+    }
+
+    fun onEmojiSelection() {
+
     }
 
     private fun toggleDrawing() {

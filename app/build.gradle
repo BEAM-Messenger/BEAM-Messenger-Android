@@ -39,7 +39,8 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.anko:anko-commons:0.10.5" // Anko
     implementation "org.jetbrains.anko:anko-design:0.10.5" // Anko
-    implementation group: 'org.eclipse.mylyn.github', name: 'org.eclipse.egit.github.core', version: '2.1.5' // Github
+    implementation group: 'org.eclipse.mylyn.github', name: 'org.eclipse.egit.github.core', version: '2.1.5'
+    // Github
 
     /*
         General Android
