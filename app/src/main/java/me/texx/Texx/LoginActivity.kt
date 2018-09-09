@@ -18,6 +18,8 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
 import android.widget.TextView
@@ -50,6 +52,9 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         matchDressCode()
         super.onCreate(savedInstanceState)
         dressCodeName = getThemeName(this)
+        // set fullscreen
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
+        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_login)
 
         populateAutoComplete()
@@ -61,7 +66,7 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             false
         })
 
-        email_sign_in_button.setOnClickListener { attemptLogin() }
+        button_sign_in.setOnClickListener { attemptLogin() }
     }
 
     private fun populateAutoComplete() {
