@@ -1,4 +1,4 @@
-package me.texx.Texx.Util
+package me.texx.Texx.util
 
 import android.content.Context
 import android.preference.PreferenceManager

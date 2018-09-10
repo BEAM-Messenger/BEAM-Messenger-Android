@@ -23,8 +23,8 @@ import com.otaliastudios.cameraview.SessionType
 import daio.io.dresscode.dressCodeName
 import daio.io.dresscode.matchDressCode
 import kotlinx.android.synthetic.main.activity_camera.*
-import me.texx.Texx.Util.PermissionUtil.askForPermission
-import me.texx.Texx.Util.PermissionUtil.permissionGranted
+import me.texx.Texx.util.PermissionUtil.askForPermission
+import me.texx.Texx.util.PermissionUtil.permissionGranted
 import me.texx.Texx.util.ThemeUtil.getThemeName
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.longToast

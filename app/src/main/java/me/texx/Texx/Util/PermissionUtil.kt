@@ -1,4 +1,4 @@
-package me.texx.Texx.Util
+package me.texx.Texx.util
 
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
