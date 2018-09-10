@@ -72,7 +72,7 @@ class RoutingActivity : AppCompatActivity() {
     private fun verifyLogin() {
         val accessToken: String? = SecureStorage(this@RoutingActivity).get("access_token") // because it may be the first start
         // synced function of fuel doesn't work here (#331) -> ugly workaround
-        if (accessToken != null) {
+        if (accessToken == null) {
             val userID = EasyPrefrences(this@RoutingActivity).getString("user_id")
             "/users/$userID".httpGet() // verify by making request to user api // TODO: More secure way of verifying
                     .responseJson { _, response, result ->
