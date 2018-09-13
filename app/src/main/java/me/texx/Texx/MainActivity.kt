@@ -3,9 +3,9 @@ package me.texx.Texx
 import android.os.Bundle
 import android.os.StrictMode
 import android.support.v7.app.AppCompatActivity
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
-import android.view.ViewGroup
 import android.widget.TextView
 import com.github.kittinunf.fuel.android.extension.responseJson
 import com.github.kittinunf.fuel.httpGet
@@ -86,7 +86,7 @@ class MainActivity : AppCompatActivity() {
     private fun getPosts(): JSONObject? {
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
-        val (_, _, result) = "/posts".httpGet().responseJson()
+        val (_, _, result) = "/posts?includes[]=user".httpGet().responseJson()
         val (data, error) = result
         return if (error == null) {
             data?.obj()
@@ -107,13 +107,21 @@ class MainActivity : AppCompatActivity() {
 
                 when (postType) {
                     "Text" -> {
-                        val text: String = (postObject.get("post") as JSONObject).get("text").toString()
-                        val padding = calculatePadding()
-                        val textView = TextView(this)
-                        textView.text = text
-                        textView.setPadding(padding, padding, padding, padding)
-                        textView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-                        post_list.addView(textView)
+                        val postTemplate = LayoutInflater.from(this).inflate(R.layout.template_text_post, null)
+
+                        val postComposer: String = (postObject.get("user") as JSONObject).get("name").toString()
+                        val postComposerTextView: TextView = postTemplate.findViewById(R.id.text_post_composer)
+                        postComposerTextView.text = postComposer
+
+                        val postDate: String = postObject.get("created_at").toString()
+                        val postDateTextView: TextView = postTemplate.findViewById(R.id.text_post_date)
+                        postDateTextView.text = postDate
+
+                        val postContent: String = (postObject.get("post") as JSONObject).get("text").toString()
+                        val postContentTextView: TextView = postTemplate.findViewById(R.id.text_post_content)
+                        postContentTextView.text = postContent
+
+                        post_list.addView(postTemplate)
                     }
                     "Media" -> {
 
@@ -121,11 +129,5 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    private fun calculatePadding(): Int {
-        val paddingDp = 16
-        val screenDensity = this.resources.displayMetrics.density
-        return (paddingDp * screenDensity).toInt()
     }
 }

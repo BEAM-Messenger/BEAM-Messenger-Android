@@ -37,6 +37,7 @@
     <string name="bug_report_edit_title_hint">Title</string>
     <string name="bug_report_edit_description">Describe your issue</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="text_post_compose_hint">What\'s happening?</string>
 
     <!--<string name="pref_title_add_friends_to_messages">Add friends to messages</string>
     <string-array name="pref_example_list_titles">
