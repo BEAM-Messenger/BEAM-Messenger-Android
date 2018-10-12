@@ -16,8 +16,7 @@
             android:layout_marginBottom="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:background="@android:color/background_light">
+            android:layout_marginTop="16dp">
 
             <TextView
                 android:id="@+id/text_post_composer"
